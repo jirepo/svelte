@@ -5,8 +5,10 @@ import UserLayout from './views/user/UserLayout.svelte'
 import UserShow from './views/user/UserShow.svelte'
 import UserMain from './views/user/UserMain.svelte'
 import Login from './views/Login.svelte';
-
-
+import PropsMain from './views/props/PropsMain.svelte'
+import DispatchMain from './views/dispatch/DispatchMain.svelte'
+import ContextMain from './views/context/ContextMain.svelte'
+import StoreMain from './views/store/StoreMain.svelte'
 
 function isAccessable() {
   // return true or false
@@ -32,6 +34,24 @@ const routes = [
     name:"login",
     component: Login,
   },
+
+  {
+    name:"props",
+    component: PropsMain,
+  },
+  {
+    name:"dispatch",
+    component: DispatchMain,
+  },
+  {
+    name:"context",
+    component: ContextMain,
+  },
+  {
+    name:"store",
+    component: StoreMain,
+  },
+  
   {
     name:"user",
     component: '',
@@ -43,6 +63,7 @@ const routes = [
     ]
   },  
 ]
+
 
 
 export { routes }
