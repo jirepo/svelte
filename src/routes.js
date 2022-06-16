@@ -9,6 +9,7 @@ import PropsMain from './views/props/PropsMain.svelte'
 import DispatchMain from './views/dispatch/DispatchMain.svelte'
 import ContextMain from './views/context/ContextMain.svelte'
 import StoreMain from './views/store/StoreMain.svelte'
+import TreeTest from './views/tree/TreeTest.svelte'
 
 function isAccessable() {
   // return true or false
@@ -50,6 +51,10 @@ const routes = [
   {
     name:"store",
     component: StoreMain,
+  },
+  {
+    name:"tree",
+    component: TreeTest,
   },
   
   {

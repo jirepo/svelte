@@ -1,9 +1,8 @@
 <script>
 	
-	import { Router } from 'svelte-router-spa'
+  import { Router } from 'svelte-router-spa'
   import { routes } from './routes'
-	
-	import '~/my.css'
+  import '~/my.css'
 </script>
 
 <main>
