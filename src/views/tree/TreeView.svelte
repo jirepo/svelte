@@ -4,24 +4,70 @@
 	const _expansionState = {
 		/* treeNodeId: expanded <boolean> */
 	}
+	// 여기에 있는 변수들은 반응형을 할 수 없음 
+	const testFlag = false;  // 테스트용 
+	console.log("최초 실행 testFlag:  " + testFlag);
+
+	const checkTestFlag = () => {
+		console.log("checkTestFlag: " + testFlag);
+		// 모듈에서 하위 컴포넌트의 printTesFlag()를 호출할 수 있는지? 
+		printTesFlag();  // 여기서는 컴포넌트 들의 printTestFlag()를 호출할 수 없다.  // Error 
+	}
+
+	const functions = new Set();
+	const notify = () => {
+		functions.forEach( func => {
+			func();
+		})
+	}
+
+	let currentItem; 
+
 </script>
 <script>
 //	import { slide } from 'svelte/transition'
 	export let tree
 	const {label, children} = tree
 
+	let current = ""; 
+
+	const printTesFlag = () => { 
+		console.log("testFlag in printTestFlag:" , testFlag); 
+	}
+
+	const clickMe = () => {
+		current = currentItem; 
+		console.log("current:", current); 
+	}
+
+	
+	// Set에 함수 등록 
+	functions.add(clickMe); 
+
+	// 
+	console.log( "testFlag:", testFlag); 
+
+	// 최초에 expanded가 false 
 	let expanded = _expansionState[label] || false
+	console.log(expanded);
+
 	const toggleExpansion = () => {
-		expanded = _expansionState[label] = !expanded
+		expanded = _expansionState[label] = !expanded;
+		currentItem = label; 
 	}
 	$: arrowDown = expanded
 </script>
+
+<button on:click="{clickMe}">Click Agagin!</button>
+
+
+
 <ul><!-- transition:slide -->
 	<li>
-		{#if children}
+		{#if children}  <!-- 자식이 있으면 -->
 			<span on:click={toggleExpansion}>
 				<span class="arrow" class:arrowDown>&#x25b6</span>
-				{label}
+				{label}  A 
 			</span>
 			{#if expanded}
 				{#each children as child}
@@ -31,7 +77,7 @@
 		{:else}
 			<span>
 				<span class="no-arrow"/>
-				{label}
+				{label} B
 			</span>
 		{/if}
 	</li>
