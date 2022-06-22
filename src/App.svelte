@@ -7,4 +7,8 @@
 
 <main>
 	<Router {routes} />
+  
+  <button class="btn">Hello daisyUI</button>
+
+
 </main>
