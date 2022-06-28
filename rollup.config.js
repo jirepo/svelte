@@ -3,13 +3,14 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import css from 'rollup-plugin-css-only';
+//import css from 'rollup-plugin-css-only';
 import alias from '@rollup/plugin-alias';
 import path from 'path';
-
-// daisUI 사용하기 위해 추가한 것
 import postcss from "rollup-plugin-postcss";
 import sveltePreprocess from "svelte-preprocess";
+import autoprefixer from 'autoprefixer';
+import cssimport from 'postcss-import';
+import html from 'rollup-plugin-generate-html-template'
 
 
 const production = !process.env.ROLLUP_WATCH;
@@ -44,26 +45,27 @@ export default {
         file: 'public/build/bundle.js',
     },
     plugins: [
+        html({
+            template : 'src/index.html',
+            target : 'public/index.html'   // bundle.js가 head에 자동 삽입된다.
+        }),
         svelte({
             compilerOptions: {
                 // enable run-time checks when not in production
                 dev: !production,
             },
-            // daisUI 사용하기 위해 추가한 것
             preprocess: sveltePreprocess({
                 sourceMap: !production,
             }),
         }),
-		// daisUI 사용하기 위해 추가한 것
-        // we'll extract any component CSS out into
-        // a separate file - better for performance
         postcss({
-            plugins: [],
-        }),
-        // we'll extract any component CSS out into
-        // a separate file - better for performance
-		// daisUI 사용하기 위해 주석처리한 것 
-        //css({ output: 'bundle.css' }),
+            //includePaths: ['src/'],
+            extensions: ['.css', '.scss', '.sass'],  // 설정된 확장자로 끝나는 파일들을 처리,
+            // bundle.js가 생성되는 디렉터리에 global.css 파일이 생성 된다.
+            extract: 'global.css',  // true로 설정하면 bundle.css 파일이 생성된다. 
+            inject: true,  // default: true, css를 bundle.js에 삽입한다.
+            plugins: [cssimport(), autoprefixer()],  // PostCSS plugins
+          }),
         // 절대경로 alias 추가하기
         // 아래와 같이 설정시 @/components는 /src/components 경로로 실행
         alias({
