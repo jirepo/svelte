@@ -1,40 +1,15 @@
 <script>
-	
-  import { Router } from 'svelte-router-spa'
-  import { routes } from './routes'
-  import '~/my.css'
+  import Router from 'svelte-spa-router'
+  import routes from './routes.js'   // 라우트정의 파일 import 
 
-  import Alert from 'bootstrap/js/dist/alert';
-  import Button from 'bootstrap/js/dist/Button';
+  // 어디에서는 css 파일을 임포트할 수 있다. 
+  import '~/my.css'
 
 </script>
 
-<main>
+
+  <!-- 여기에 routes.js에서 정의한 라우트 이름에 해당하는 컴포너트가 표시된다. -->
+  <!-- routes 프러퍼티 전달-->
 	<Router {routes} />
 
 
-  <div class="alert alert-primary" role="alert">
-    This is a primary alert—check it out!
-  </div>
-
-  <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-secondary">Left</button>
-    <button type="button" class="btn btn-secondary">Middle</button>
-    <button type="button" class="btn btn-secondary">Right</button>
-  </div>
-
-
-  <button type="button" class="btn btn-primary">
-    Notifications <span class="badge badge-light">4</span>
-  </button>
-
-
-  <ul class="list-group">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Morbi leo risus</li>
-    <li class="list-group-item">Porta ac consectetur ac</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
-
-</main>

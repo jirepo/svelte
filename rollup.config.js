@@ -10,7 +10,7 @@ import postcss from "rollup-plugin-postcss";
 import sveltePreprocess from "svelte-preprocess";
 import autoprefixer from 'autoprefixer';
 import cssimport from 'postcss-import';
-import html from 'rollup-plugin-generate-html-template'
+//import html from 'rollup-plugin-generate-html-template'
 
 
 const production = !process.env.ROLLUP_WATCH;
@@ -25,7 +25,8 @@ function serve() {
     return {
         writeBundle() {
             if (server) return;
-            server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+            //server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+            server = require('child_process').spawn('npm', ['run', 'start'], {
                 stdio: ['ignore', 'inherit', 'inherit'],
                 shell: true,
             });
@@ -45,10 +46,10 @@ export default {
         file: 'public/build/bundle.js',
     },
     plugins: [
-        html({
-            template : 'src/index.html',
-            target : 'public/index.html'   // bundle.js가 head에 자동 삽입된다.
-        }),
+        // html({
+        //     template : 'src/index.html',
+        //     target : 'public/index.html'   // bundle.js가 head에 자동 삽입된다.
+        // }),
         svelte({
             compilerOptions: {
                 // enable run-time checks when not in production
@@ -59,7 +60,7 @@ export default {
             }),
         }),
         postcss({
-            //includePaths: ['src/'],
+            //includePaths: ['src/'],  // 이건 필요 없음. 문서에서도  이 속성은 찾을 수 없음 
             extensions: ['.css', '.scss', '.sass'],  // 설정된 확장자로 끝나는 파일들을 처리,
             // bundle.js가 생성되는 디렉터리에 global.css 파일이 생성 된다.
             extract: 'global.css',  // true로 설정하면 bundle.css 파일이 생성된다. 
