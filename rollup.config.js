@@ -41,9 +41,18 @@ export default {
     input: 'src/main.js',
     output: {
         sourcemap: true,
-        format: 'iife',
+        //format: 'iife',
+        // minify할 것인지 여부, 개발 시에는 false
+        compact: false, 
+        format: 'es',  // 동적 임포트 사용시
+        // 동적으로 컴포넌트를 로드하고 번들 파일을 분리할 때 사용한다.
+        inlineDynamicImports: true, 
         name: 'app',
-        file: 'public/build/bundle.js',
+        // file은 동적 컴포넌트 로드일때는 사용하지 못하고 dir을 사용한다. 
+        //file: 'public/build/bundle.js',
+        dir: 'public/build',
+        entryFileNames: '[name]-[format].js',
+        chunkFileNames: '[name]-[format]-[hash].js',
     },
     plugins: [
         // html({
