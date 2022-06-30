@@ -1,10 +1,12 @@
-//import {wrap} from 'svelte-spa-router/wrap'
+
+// component를 동적으로 임포트하기 위해 
+import {wrap} from 'svelte-spa-router/wrap'
 
 import Main from './views/Main.svelte';
-import List from './views/List.svelte';
+//import List from './views/List.svelte';
 import Detail from './views/Detail.svelte';
 import NotFound from './views/NotFound.svelte';
-import Hello from './views/hello/Hello.svelte';
+//import Hello from './views/hello/Hello.svelte';
 
 // import Login from './views/Login.svelte';
 // import PropsMain from './views/props/PropsMain.svelte'
@@ -28,15 +30,35 @@ import Hello from './views/hello/Hello.svelte';
 // 아래는 svelte-spa-router를 사용할 때 
 // http:/localhost:8080/#/list 와 같이 라우팅 경로 앞에 #이 붙어야 한다. 
 // 라우팅 경로 설정 
+// export default  {
+//   // http://localhost/
+//   "/": Main,
+//   // http://localhost/#/list 
+//   "/list": List,
+//   // http://localhost/#/detail
+//   "/detail": Detail,
+//   "/hello": Hello, 
+//   "/hello/*": Hello, 
+//   "*": NotFound,
+// }
+
+
+// Dynamic import를 사용하는 방법
 export default  {
   // http://localhost/
   "/": Main,
   // http://localhost/#/list 
-  "/list": List,
+  "/list": wrap({
+    asyncComponent: () =>  import('./views/List.svelte')
+  }),
   // http://localhost/#/detail
   "/detail": Detail,
-  "/hello": Hello, 
-  "/hello/*": Hello, 
+  "/hello": wrap({
+    asyncComponent: () =>  import('./views/hello/Hello.svelte')
+  }),
+  "/hello/*": wrap({
+    asyncComponent: () =>  import('./views/hello/Hello.svelte')
+  }),
   "*": NotFound,
 }
 
